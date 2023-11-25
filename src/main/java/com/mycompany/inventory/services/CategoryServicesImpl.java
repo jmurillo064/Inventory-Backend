@@ -27,7 +27,7 @@ public class CategoryServicesImpl implements ICategoryServices{
 		try {
 			List<Category> categories = (List<Category>) categoryDao.findAll();
 			response.getCategoryResponse().setCategory(categories);
-			response.setMetadata("Respuesta OK", "000", "Respuesta exitosa");
+			response.setMetadata("Respuesta OK", "00", "Respuesta exitosa");
 		} catch (Exception e) {
 			response.setMetadata("Respuesta Error", "-1", "Datos no disponibles");
 			e.getStackTrace();
