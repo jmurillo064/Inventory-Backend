@@ -44,7 +44,12 @@ public class ProductRestController {
         product.setPicture(Util.compressZLib(picture.getBytes()));
 
         ResponseEntity<ProductResponseRest> response = iProductService.save(product, categoryId);
+        return response;
+    }
 
+    @GetMapping("/products/{id}")
+    public ResponseEntity<ProductResponseRest> searchById(@PathVariable Long id){
+        ResponseEntity<ProductResponseRest> response = iProductService.searchById(id);
         return response;
     }
 
