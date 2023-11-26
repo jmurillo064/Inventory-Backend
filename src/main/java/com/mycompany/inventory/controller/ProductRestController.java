@@ -58,9 +58,25 @@ public class ProductRestController {
         return response;
     }
 
+    /**
+     *
+     * @param name
+     * @return
+     */
     @GetMapping("/products/filter/{name}")
     public ResponseEntity<ProductResponseRest> searchByName(@PathVariable String name){
         ResponseEntity<ProductResponseRest> response = iProductService.searchByName(name);
+        return response;
+    }
+
+    /**
+     *
+     * @param id
+     * @return
+     */
+    @DeleteMapping("/products/{id}")
+    public ResponseEntity<ProductResponseRest> deleteById(@PathVariable Long id){
+        ResponseEntity<ProductResponseRest> response = iProductService.deleteById(id);
         return response;
     }
 

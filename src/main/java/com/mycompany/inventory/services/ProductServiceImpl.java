@@ -113,4 +113,20 @@ public class ProductServiceImpl implements IProductService{
         }
         return new ResponseEntity<ProductResponseRest>(productResponseRest, HttpStatus.OK);
     }
+
+    @Override
+    @Transactional
+    public ResponseEntity<ProductResponseRest> deleteById(Long id) {
+        ProductResponseRest productResponseRest = new ProductResponseRest();
+        try {
+            //delete product by id
+            iProductDao.deleteById(id);
+            productResponseRest.setMetadata("Respuesta ok", "00", "Producto eliminado");
+        } catch (Exception e) {
+            e.getStackTrace();
+            productResponseRest.setMetadata("Respuesta nok", "-1", "Error al eliminar producto");
+            return new ResponseEntity<ProductResponseRest>(productResponseRest, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<ProductResponseRest>(productResponseRest, HttpStatus.OK);
+    }
 }
