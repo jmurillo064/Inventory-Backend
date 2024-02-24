@@ -118,4 +118,11 @@ public class ProductRestController {
         return response;
     }
 
+    @PutMapping("/products/sell/{id}")
+    public ResponseEntity<ProductResponseRest> sellProducto(@PathVariable Long id,
+                                                            @RequestParam("account") int account)throws IOException {
+        ResponseEntity<ProductResponseRest> response = iProductService.sellProductById(id,account);
+        return response;
+    }
+
 }

@@ -204,4 +204,37 @@ public class ProductServiceImpl implements IProductService{
         }
         return new ResponseEntity<ProductResponseRest>(productResponseRest, HttpStatus.OK);
     }
+
+    @Override
+    public ResponseEntity<ProductResponseRest> sellProductById(Long idProducto, int cantidad) {
+        ProductResponseRest productResponseRest = new ProductResponseRest();
+        List<Product> productList = new ArrayList<>();
+        try {
+            //search the product
+            Optional<Product> productSearch = iProductDao.findById(idProducto);
+            if(productSearch.isPresent()){
+                //se actualiza cantidad del producto
+                productSearch.get().setAccount(cantidad);
+                //save into database
+                Product productUpdate = iProductDao.save(productSearch.get());
+                if (null != productUpdate) {
+                    productList.add(productUpdate);
+                    productResponseRest.getProductResponse().setProducts(productList);
+                    productResponseRest.setMetadata("Respuesta ok", "00", "Producto actualizado");
+                } else {
+                    productResponseRest.setMetadata("Respuesta nok", "-1", "Producto no actualizado");
+                    return new ResponseEntity<ProductResponseRest>(productResponseRest, HttpStatus.BAD_REQUEST);
+                }
+            } else {
+                productResponseRest.setMetadata("Respuesta nok", "-1", "Producto no actualizado");
+                return new ResponseEntity<ProductResponseRest>(productResponseRest, HttpStatus.NOT_FOUND);
+            }
+
+        } catch (Exception e) {
+            e.getStackTrace();
+            productResponseRest.setMetadata("Respuesta nok", "-1", "Error al actualizar producto");
+            return new ResponseEntity<ProductResponseRest>(productResponseRest, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<ProductResponseRest>(productResponseRest, HttpStatus.OK);
+    }
 }
