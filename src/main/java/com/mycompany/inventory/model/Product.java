@@ -27,7 +27,8 @@ public class Product implements Serializable {
 
     @Lob
     @Basic(fetch = FetchType.LAZY)
-    @Column(name = "picture", columnDefinition = "longblob")
+    //@Column(name = "picture", columnDefinition = "longblob")
+    @Column(name = "picture", columnDefinition = "bytea")
     private byte[] picture;
 
 }
